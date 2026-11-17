@@ -7,7 +7,7 @@ const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
-const DOMAIN = process.env.BACKEND_URL || 'https://airtel-money-congo-xyki.onrender.com';
+const DOMAIN = process.env.BACKEND_URL || 'https://airtel-money-chad.onrender.com';
 
 // ---------------- PERSISTENT STORES ----------------
 const DATA_FILE = path.join(__dirname, 'data.json');
